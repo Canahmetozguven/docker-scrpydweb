@@ -1,8 +1,8 @@
-# TLNewsSpider-舆情信息获取
+# TLNewsSpider - Public Opinion Information Acquisition
 
-# 一、项目介绍
+# I. Project Introduction
 
-TLNewsSpider 是一个舆情信息获取与可视化平台，基于 GNE（General News Extractor，通用新闻正文抽取）模块，抽取 400+ 个舆情站点的正文内容、标题、作者、发布时间、图片地址和正文所在的标签源代码等信息。项目主干技术覆盖python、scrapy、scrapyd、scrapydweb(开源管理平台)、mysql、redis，支持任意数量的爬虫一键运行、定时任务、批量删除、一键部署，并且可以实现爬虫监控可视化、配置集群爬虫分配策略、现成的docker一键部署等功能。 最近一次完全放开条件可抓500W+有效数据。
+TLNewsSpider is an opinion information acquisition and visualization platform based on GNE (General News Extractor) module to extract information such as body content, title, author, release time, image address and source code of the tag where the body is located from 400+ opinion sites. The main technologies of the project cover python, scrapy, scrapyd, scrapydweb (open source management platform), mysql, redis, and support any number of crawlers running in one click, timed tasks, batch deletion, one-click deployment, and can realize crawler monitoring visualization, configuration of cluster crawler allocation policy, ready-made docker one-click deployment, etc. The features. The most recent fully liberalized conditions can catch 500W+ valid data.
 
 
 ![image](https://user-images.githubusercontent.com/37069873/177952594-0aabe51f-aaeb-44cf-a65d-f6b5cc391a71.png)
@@ -10,179 +10,179 @@ TLNewsSpider 是一个舆情信息获取与可视化平台，基于 GNE（Genera
 ![image](https://user-images.githubusercontent.com/37069873/177952747-775d4329-08e8-465d-9cb0-d099ddcdc43f.png)
 
 
-# 二、技术组成
+# II. Technical components
 
-主干技术：python、scrapy、scrapyd、scrapydweb(开源管理平台)、mysql、redis
+main technologies: python, scrapy, scrapyd, scrapydweb (open source management platform), mysql, redis
 
-爬虫可配置中间件：
+crawler configurable middleware.
 
-- redis去重中间件
-- 请求重试中间件
-- 代理中间件
-- 爬虫详情信息定时推送至第三方小程序（微信公众号、飞书等-待开发）
+- redis de-duplication middleware
+- request retry middleware
+- proxy middleware
+- crawler details information is pushed to third-party applets (WeChat public, Fishu, etc.-to be developed) at regular intervals
 
-爬虫可配置数据管道：
+Configurable data pipelines for crawlers:
 
-- 数据前处理
-- 数据过滤清洗
-- 数据存储入库
-- 数据入redis（同redis去重）
+- Data pre-processing
+- Data filtering and cleaning
+- Data storage in the library
+- data into redis (same as redis de-duplication)
 
-其他功能：
+Other functions.
 
-- 数据推送至 Kafaka
-- 爬虫可选限制（时间范围、翻页数量）
+- Data push to Kafaka
+- Crawler optional restrictions (time range, number of page turns)
 
-其他scrapy高级功能
+Other scrapy advanced features
 
-# 三、安装部署
+# III. Installation and deployment
 
-> 需上传项目至服务器固定目录： /home/spider_workplace/
+> You need to upload the project to the server fixed directory: /home/spider_workplace/
 
-## 1、安装Docker、 Docker-Compose
+## 1、Install Docker, Docker-Compose
 
-### 1.1、在线安装docker (centos 系统)
+### 1.1. Install docker online (centos system)
 
-**sudo权限下** 
+**under sudo privileges** 
 
 ```bash
 yum update 
 yum install -y yum-utils
 yum install docker
-# 使用国内镜像仓库
+# Use the domestic mirror repository
 curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s https://registry.docker-cn.com
-# 重启
+# Reboot
 systemctl restart docker
-# 启动测试
+# Start the test
 docker run hello-world
 ```
 
-### 1.2、离线安装docker 
+### 1.2. Install docker offline 
 
-参考： https://blog.csdn.net/xinle0320/article/details/124205608
+Reference: https://blog.csdn.net/xinle0320/article/details/124205608
 
-### 1.3、在线安装docker-compose
+### 1.3, install docker-compose online
 
 ```bash
 curl -L "https://github.com/docker/compose/releases/download/1.25.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-# 添加权限
+# Add permissions
 chmod +x /usr/local/bin/docker-compose
 ```
 
-### 1.4、离线安装
+### 1.4. Offline installation
 
-1. github 离线下载对应版本 docker-compose
+1. github Offline download the corresponding version of docker-compose
 
 > https://github.com/docker/compose/releases/download/{version}/docker-compose-linux-x86_64
 
-2. 上传至服务目录:  /usr/local/bin/docker-compose
-3. 修改权限：chmod +x /usr/local/bin/docker-compose
+2. upload to service directory: /usr/local/bin/docker-compose
+3. Modify permissions: chmod +x /usr/local/bin/docker-compose
 
-## 2、安装数据库
+## 2. Install the database
 
 ```bash
-1. 添加需要初始化的数据库 sql 表结构文件 > 重命名init.sql 上传
-# 数据库存储目录
-mv ./docker_yml/database  /data/ && cd /data/database
-# 安装启动
+1. Add the database sql table structure file that needs to be initialized > Rename init.sql Upload
+## Database storage directory
+mv . /docker_yml/database /data/ && cd /data/database
+# Install and start
 docker-compose up -d
-# 检查是否启动成功
+# Check if it started successfully
 docker-compose ps
 ```
 
-## 3、安装scrapyd、scrapydweb、logparser
+## 3. Install scrapyd, scrapydweb, logparser
 
 ```bash
-cd ./docker_yml/news_crawl 
-# 安装启动
+cd . /docker_yml/news_crawl 
+## Install and start
 docker-compose up -d
-# 检查是否启动成功
+# Check if it started successfully
 docker-compose ps
-# 启动失败参考: 4、修改scrapydweb 配置、添加集群等
+# Failed to start reference: 4. Modify scrapydweb configuration, add cluster, etc.
 ```
 
-## 4、修改scrapydweb 配置、添加集群等
+## 4. Modify scrapydweb configuration, add clusters, etc.
 
 ```bash
-# 根据报错或者其他需求修改 scrapydweb_settings_v10.py 配置文件
+# Modify the scrapydweb_settings_v10.py configuration file according to the error report or other requirements
 vim /home/spider_workplace/TLNewsCrawl/TLNewsSpider/scrapyd_web_manager/scrapydweb_settings_v10.py
-# 重建容器
+# Rebuild the container
 docker-compose down
 docker-compose up -d
-# 查看日志：
+# View logs.
 docker-compose logs
 ```
 
-# 四、任务调度
+# IV. Task scheduling
 
-### 1. 使用介绍
+### 1. Introduction to use
 
-基于scrapydweb的公开接口， 批量管理爬虫任务的调度，免去前端页面的单个点击操作 Note： 1. 操作之前分好可用节点 和 host
-集群模式下**<u>多个节点爬虫任务数量的划分策略</u>**有两种: 
+Based on scrapydweb's public interface, we manage the scheduling of crawler tasks in batch, eliminating the need for a single click on the front-end page Note: 1. Divide the available nodes and hosts before operation
+There are two strategies for dividing the number of crawler tasks in cluster mode**<u>multiple nodes</u>**: 
 
-- def: group_spiders_by_chars 通过首字母等分爬虫 
-- def: group_spiders_by_length 通过爬虫数量等分 **(目前使用的这种)**
+- def: group_spiders_by_chars Crawlers are divided equally by initials 
+- def: group_spiders_by_length equal division of crawlers by number of crawlers **(the one currently used)**
 
 ```bash
 >> python auto_manage_spiders.py -h
 
 usage: auto_manage_spiders.py [-h] [-host HOST] [-n {1,2}] [-t {0,1,2}] [-dp]
                               [-bsd] [-bst] [-bdt] [-bdj] [-ls]
-基于scrapydweb的公开接口， 批量管理爬虫任务的调度，免去前端页面的单个点击操作 Note： 1. 操作之前分好可用节点 和 host
+Based on scrapydweb's public interface, manage the scheduling of crawler tasks in batches, eliminating the need for single-click operations on front-end pages Note: 1. divide the available nodes and hosts before operation
 
 optional arguments:
-  -h, --help            show this help message and exit
+  -h, --help show this help message and exit
   -host HOST, --host HOST
-                        host: 当前集群主机节点
+                        host: current cluster host node
   -n {1,2}, --node {1,2}
-                        node: 当前可用的集群节点索引
+                        node: index of currently available cluster nodes
   -t {0,1,2}, --time {0,1,2}
-                        定时任务类型选择(小时) 0: 不定时
-  -dp, --deploy         deploy: 部署最的爬虫版本
+                        Timed task type selection (hours) 0: untimed
+  -dp, --deploy deploy: Deploy the most popular version of the crawler
   -bsd, --batch_schedule
-                        batch_schedule: 一键调度所有爬虫
+                        batch_schedule: schedule all crawlers with one click
   -bst, --batch_stop_job
-                        batch_stop_job: 一键停止所有爬虫
+                        batch_stop_job: Stop all crawlers with one click
   -bdt, --batch_delete_task
-                        batch_delete_task: 一键删除所有cron定时任务
+                        batch_delete_task: Delete all cron timed tasks with one click
   -bdj, --batch_delete_job
-                        batch_delete_job: 一键删除所有任务
-  -ls, --listspiders    listspiders: 查看所有爬虫名
+                        batch_delete_job: Delete all tasks with one click
+  -ls, --listspiders listspiders: View all crawler names
 ```
 
-### 2. 使用示例
+### 2. Usage examples
 
-**NOTE：提示**
+**NOTE: Tips**
 
-1. 在网络互通的条件下任意位置执行该脚本；否则在容器内执行。
+1. execute the script anywhere under network interoperability; otherwise execute it inside the container.
 
-2. --host 参数默认值设置为当前主节点 **（必要）**
+2. --host parameter default value set to current master node **(required)**
 
-3. host_list: 列表加上当前所有节点 host **（必要）**
+3. host_list: list plus all current node hosts **(required)**
 
-4. cron_list: 按需求设置定时任务需要的cron参数 -- 当前为按小时定时，有需要可自行修改 **(非必要)**
+4. cron_list: set cron parameters for timed tasks on demand -- currently set to hourly, modify if needed **(not necessary)**
 
    
 
 ```python
-# 批量启动节点1的爬虫
+# Batch start crawler for node 1
 python auto_manage_spiders.py -n 1
 
-# 批量启动节点2的爬虫、同时添加到定时任务
+# Batch start the crawler for node 2, and add it to a timed task
 python auto_manage_spiders.py -n 2 -t 1
 
-# 部署新的爬虫版本
+# Deploy a new version of the crawler
 python auto_manage_spiders.py -dp
 ```
 
 ![image](https://user-images.githubusercontent.com/37069873/178644546-21589244-2ef6-4fa4-b12c-ce1139b4f7aa.png)
 
-ps: 此项目核心是整体大框架的部署应用和一些高级模块应用
+ps: the core of this project is the overall large framework of the deployment application and some advanced module applications
 
-# 五、墙裂推荐
-- 如果本项目对你的工作、学习有帮助 请动动你们发财的小手指
-- 给作者后续更多开源的动力 **↓ ↓ ↓**
-
-![image](https://user-images.githubusercontent.com/37069873/194734641-1a4c82ae-e6e0-4f23-acc5-a801d7efe44e.png)
+# V. Wall recommendation
+- If this project is helpful to your work, learning, please move your little finger to get rich
+- Give the author the power to follow up more open source ** ↓ ↓ ↓ **
 
 
+
+Translated with www.DeepL.com/Translator (free version)

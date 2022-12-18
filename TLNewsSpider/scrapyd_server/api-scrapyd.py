@@ -140,7 +140,7 @@ class ScrapyApp(object):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, add_help=False, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('-h', '--help', dest='help', help='获取帮助信息', action='store_true', default=False)
+    parser.add_argument('-h', '--help', dest='help', help='show this help message and exit', action='store_true', default=False)
     # 通用参数
     parser.add_argument('-p', '--project', dest='project', help='项目名')
     parser.add_argument('-v', '--version', dest='version', help='版本名')

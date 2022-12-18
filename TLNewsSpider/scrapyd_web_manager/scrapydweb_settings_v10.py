@@ -17,7 +17,7 @@ import os
 # The default is '0.0.0.0'.
 SCRAPYDWEB_BIND = '0.0.0.0'
 # Accept connections on the specified port, the default is 5000.
-SCRAPYDWEB_PORT = 5000
+SCRAPYDWEB_PORT = 8000
 
 # The default is False, set it to True to enable basic auth for the web UI.
 ENABLE_AUTH = False
@@ -46,7 +46,7 @@ PASSWORD = 'tlrobot@123.'
 #   - it's recommended to pass in a tuple of 5 elements.
 #   - e.g. ('', '', '127.0.0.1', '6800', '') or ('username', 'password', 'localhost', '6801', 'group')
 SCRAPYD_SERVERS = [
-   '127.0.0.1:6800'
+   'host.docker.internal:6800'
 #    '192.168.1.138:6800',
     # 'username:password@localhost:6801#group',
     # ('', '', '127.0.0.1', '6800', '137主机器'),
@@ -65,15 +65,15 @@ SCRAPYD_SERVERS = [
 # to the Scrapyd server.
 # e.g. '127.0.0.1:6800' or 'localhost:6801', do not forget the port number.
 # LOCAL_SCRAPYD_SERVER = '127.0.0.1:6800'
-LOCAL_SCRAPYD_SERVER = '127.0.0.1:6800'
+# LOCAL_SCRAPYD_SERVER = '127.0.0.1:6800'
 
 # Enter the directory when you run Scrapyd, run the command below
 # to find out where the Scrapy logs are stored:
 # python -c "from os.path import abspath, isdir; from scrapyd.config import Config; path = abspath(Config().get('logs_dir')); print(path); print(isdir(path))"
 # Check out https://scrapyd.readthedocs.io/en/stable/config.html#logs-dir for more info.
 # e.g. 'C:/Users/username/logs' or '/home/username/logs'
-# LOCAL_SCRAPYD_LOGS_DIR = '/home/spider_workplace/TLNewsCrawl/TLNewsSpider/scrapyd_server/logs'
-LOCAL_SCRAPYD_LOGS_DIR = r'E:\workplace\TLNewsCrawl\TLNewsSpider\scrapyd_server\logs'
+LOCAL_SCRAPYD_LOGS_DIR = '/home/spider_workplace/TLNewsCrawl/TLNewsSpider/scrapyd_server/logs'
+# LOCAL_SCRAPYD_LOGS_DIR = r'E:\workplace\TLNewsCrawl\TLNewsSpider\scrapyd_server\logs'
 
 # The default is False, set it to True to automatically run LogParser as a subprocess at startup.
 # Note that you can run the LogParser service separately via command 'logparser' as you like.r
@@ -100,7 +100,7 @@ PRIVATEKEY_FILEPATH = ''
 # ScrapydWeb is able to locate projects in the SCRAPY_PROJECTS_DIR,
 # so that you can simply select a project to deploy, instead of packaging it in advance.
 # e.g. 'C:/Users/username/myprojects' or '/home/username/myprojects'
-SCRAPY_PROJECTS_DIR = r'E:\workplace\TLNewsCrawl'
+SCRAPY_PROJECTS_DIR = r'/home/spider_workplace/TLNewsCrawl'
 # SCRAPY_PROJECTS_DIR = '/home/spider_workplace/TLNewsCrawl'
 
 
@@ -362,4 +362,4 @@ DATA_PATH = os.environ.get('DATA_PATH', '')
 # 'sqlite:///C:/Users/username'
 # 'sqlite:////home/username'
 # DATABASE_URL = os.environ.get('DATABASE_URL', '')
-DATABASE_URL = "mysql://root:Tlrobot123.@192.168.1.137:3306"
+DATABASE_URL = "mysql://root:xxx@host.docker.internal:3306"

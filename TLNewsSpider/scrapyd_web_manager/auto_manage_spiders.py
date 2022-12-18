@@ -7,9 +7,9 @@
 """
 
 __DESC__ = '''
-基于scrapydweb的公开接口， 批量管理爬虫任务的调度，免去前端页面的单个点击操作
-Note：
-    1. 操作之前分好可用节点 和 host
+Based on scrapydweb's public interface, batch management of crawler task scheduling, eliminating the need for single-click operations on front-end pages
+Note: 1.
+    1. divide the available nodes and hosts before operation
 '''
 
 import re
@@ -23,7 +23,7 @@ from urllib.parse import urljoin
 
 class BaseInfo:
 
-    def __init__(self, node, host, project_name='TLNewsSpider', version='default: the latest version'):
+    def __init__(self, node, host, project_name='arabamcom', version='default: the latest version'):
         self.node = node
         self.node_size = len(host_list) -1
         self.version = version
@@ -68,7 +68,7 @@ class BaseInfo:
             'second': '0',
             'start_date': '',
             'end_date': '',
-            'timezone': 'Asia/Shanghai',
+            'timezone': 'Europe/Istanbul',
             'jitter': '0',
             'misfire_grace_time': '600',
             'coalesce': 'True',
@@ -268,22 +268,22 @@ class ManageTasks(BaseInfo):
 def parse_args():
     parser = argparse.ArgumentParser(description=__DESC__)
     # 主节点
-    parser.add_argument("-host", "--host", default='192.168.167.85:5000', help='host: 当前集群主机节点')
+    parser.add_argument("-host", "--host", default='127.0.0.1:8000', help='host: current cluster host node')
     # 当前可用集群节点
-    parser.add_argument("-n", "--node", choices=['1', '2'], default='1', help='node: 当前可用的集群节点索引')
+    parser.add_argument("-n", "--node", choices=['1', '2'], default='1', help='node: index of currently available cluster nodes')
     # 是否使用定时任务
-    parser.add_argument("-t", "--time", choices=[0, 1, 2], type=int, default=0, help='定时任务类型选择(小时) 0: 不定时')
+    parser.add_argument("-t", "--time", choices=[0, 1, 2], type=int, default=0, help='Timed task type selection (hours) 0: untimed')
     # 部署版本
-    parser.add_argument("-dp", "--deploy", action='store_true', help='deploy: 部署最的爬虫版本')
+    parser.add_argument("-dp", "--deploy", action='store_true', help='deploy: Deploy the most popular version of the crawler')
     # 调度任务
-    parser.add_argument("-bsd", "--batch_schedule", action='store_true', help='batch_schedule: 一键调度所有爬虫')
+    parser.add_argument("-bsd", "--batch_schedule", action='store_true', help='batch_schedule: schedule all crawlers with one click')
     # 终止任务
-    parser.add_argument("-bst", "--batch_stop_job", action='store_true', help='batch_stop_job: 一键停止所有爬虫')
+    parser.add_argument("-bst", "--batch_stop_job", action='store_true', help='batch_stop_job: Stop all crawlers with one click')
     # 删除
-    parser.add_argument("-bdt", "--batch_delete_task", action='store_true', help='batch_delete_task: 一键删除所有cron定时任务')
-    parser.add_argument("-bdj", "--batch_delete_job", action='store_true', help='batch_delete_job: 一键删除所有任务')
+    parser.add_argument("-bdt", "--batch_delete_task", action='store_true', help='batch_delete_task: Delete all cron timed tasks with one click')
+    parser.add_argument("-bdj", "--batch_delete_job", action='store_true', help='batch_delete_job: Delete all tasks with one click')
     # 查看爬虫列表
-    parser.add_argument("-ls", "--listspiders", action='store_true', help='listspiders: 查看所有爬虫名')
+    parser.add_argument("-ls", "--listspiders", action='store_true', help='listspiders: View all crawler names')
     return parser.parse_args()
 
 #  -----------------配置参数-------------------------

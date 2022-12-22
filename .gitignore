@@ -6,3 +6,15 @@ dbs
 __pycache__
 /TLNewsSpider/project.egg-info
 /TLNewsSpider/build
+docker_yml/database/mysql57/data/*
+TLNewsSpider/scrapyd_server/*.csv
+.gitignore
+.idea/*
+TLNewsSpider/*.DS_Store
+docker_yml/database/.DS_Store
+.DS_Store
+docker_yml/database/redis/data/appendonly.aof
+TLNewsSpider/arabamcom/*
+TLNewsSpider/scrapyd_server/proxies.txt
+TLNewsSpider/scrapyd_server/araba.db
+TLNewsSpider/.scrapy/stats/araba_crawler_stats_history

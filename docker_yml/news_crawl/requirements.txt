@@ -69,3 +69,4 @@ playwright_stealth
 scrapy_playwright
 spidermon
 rotating_free_proxies
+pymongo
